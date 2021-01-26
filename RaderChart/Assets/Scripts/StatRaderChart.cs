@@ -8,7 +8,7 @@ public class StatRaderChart : MonoBehaviour
 
     private CanvasRenderer _radarMeshCanvasRenderer;
     [SerializeField] private Material _radarMaterial;
-    [SerializeField] private Texture2D _radarTexture2D;
+    //[SerializeField] private Texture2D _radarTexture2D;
 
     private void Awake()
     {
@@ -83,12 +83,21 @@ public class StatRaderChart : MonoBehaviour
 
         //assign a texture position to the uv index (uv index = vertex index)
         //Vector2.one means the top right of the texture (0, 0: bottom left)(0, 1: top left)(1, 1: top right)(1, 0: bottom right)
-        uv[0] = Vector2.zero;
+        /*uv[0] = Vector2.zero;
         uv[wealthVertexIndex] = Vector2.one;
         uv[careerVertexIndex] = Vector2.one;
         uv[healthVertexIndex] = Vector2.one;
         uv[marriageVertexIndex] = Vector2.one;
-        uv[relationVertexIndex] = Vector2.one;
+        uv[relationVertexIndex] = Vector2.one;*/
+
+        //////////////////////version 2 updates///////////////////////
+        //assign a material position to each vertices (assign a color to each categories)
+        uv[0] = new Vector2(0.5f, 0.5f); // get the middle uv of the material(RadarGraph_Mat)
+        uv[wealthVertexIndex] = Vector2.up; // get the top left uv (Yellow)
+        uv[careerVertexIndex] = Vector2.one; // get the top right uv (Red)
+        uv[healthVertexIndex] = Vector2.zero; // get the bottom left uv (Green)
+        uv[marriageVertexIndex] = Vector2.one; // get the top right uv (Red)
+        uv[relationVertexIndex] = Vector2.right; // get the bottom right uv (Blue)
 
         //upload the values to the mesh
         mesh.vertices = vertices;
@@ -97,6 +106,8 @@ public class StatRaderChart : MonoBehaviour
 
         //render the mesh
         _radarMeshCanvasRenderer.SetMesh(mesh);
-        _radarMeshCanvasRenderer.SetMaterial(_radarMaterial, _radarTexture2D);
+        //////////////////////version 2 updates///////////////////////
+        //_radarMeshCanvasRenderer.SetMaterial(_radarMaterial, _radarTexture2D);
+        _radarMeshCanvasRenderer.SetMaterial(_radarMaterial, null);
     }
 }
